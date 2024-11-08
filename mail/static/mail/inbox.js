@@ -102,12 +102,21 @@ function load_mailbox(mailbox) {
             replyButton.innerText='Reply';
 
             replyButton.addEventListener('click', () => {
-
+              subject=`Re: ${email.subject}`
+              if (email.subject.startsWith("Re: ")) {
+                subject=email.subject; 
+              }
+              let body = email.body;
+              if (!email.body.startsWith("On ")) {
+                body = `On ${email.timestamp}, ${email.sender} wrote:\n${email.body}\n`;
+              }
+              
+              document.querySelector('#compose-body').value =body;
               document.querySelector('#compose-recipients').value =email.sender;
-              document.querySelector('#compose-subject').value =`Re: ${email.subject}`;
-              document.querySelector('#compose-body').value =`On ${email.timestamp}, ${email.sender} wrote:\n${email.body}`;
+              document.querySelector('#compose-subject').value =subject;
 
-            
+              composeForm = document.querySelector('#compose-form');
+              composeForm.onsubmit = emailsubmission;
               document.querySelector('#emails-view').style.display='none';
               document.querySelector('#emails-props-view').style.display='none';
               document.querySelector('#compose-view').style.display='block';
@@ -124,9 +133,11 @@ function load_mailbox(mailbox) {
 
 function emailsubmission(event){
   event.preventDefault();
+
   fetch('/emails', {
     method: 'POST',
     body: JSON.stringify({
+
       recipients: document.querySelector('#compose-recipients').value,
       subject: document.querySelector('#compose-subject').value,
       body: document.querySelector('#compose-body').value
