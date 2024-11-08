@@ -1,3 +1,34 @@
 textarea {
     min-height: 400px;
 }
+.email-info{
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .email-info.unread {
+    background-color: white;
+  }
+  
+  .email-info.read {
+    background-color: gray;
+  }
+  
+  .email-info:hover {
+    transform: scale(1.02);
+  }
+  #emails-props-view {
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  .email-info:hover {
+    transform: scale(1.02);
+  }
