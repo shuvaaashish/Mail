@@ -64,6 +64,7 @@ function load_mailbox(mailbox) {
               <strong>From:</strong>${email.sender}<br>
               <strong>To:</strong>${email.recipients}<br>
               <strong>Subject:</strong>${email.subject}<br>
+              <strong>Body:</strong>${email.body}<br>
               <p>${email.timestamp}</p>
             `;
             if(email.read==false){

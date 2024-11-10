@@ -6,7 +6,7 @@ from django.http import JsonResponse
 from django.shortcuts import HttpResponse, HttpResponseRedirect, render
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
-
+from django.db.models import Q
 from .models import User, Email
 
 
@@ -82,11 +82,11 @@ def mailbox(request, mailbox):
         )
     elif mailbox == "sent":
         emails = Email.objects.filter(
-            user=request.user, sender=request.user
+            user=request.user, sender=request.user, archived=False
         )
     elif mailbox == "archive":
         emails = Email.objects.filter(
-            user=request.user, recipients=request.user, archived=True
+            Q(user=request.user) | Q(recipients=request.user), archived=True
         )
     else:
         return JsonResponse({"error": "Invalid mailbox."}, status=400)
